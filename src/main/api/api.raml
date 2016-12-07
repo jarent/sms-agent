@@ -1,0 +1,64 @@
+#%RAML 0.8
+title: SMS Agent
+
+baseUri: http://localhost:8080/{version}
+version: v1
+/smsagent/query:
+  post:
+    body:
+      application/json:
+        schema: |
+          {
+          "type": "object",
+          "$schema": "http://json-schema.org/draft-03/schema",
+          "properties": {
+               "iftttMakerTrigger": {
+              "type":"object",
+              "required":true,
+              "properties": {
+                "eventName": {
+                    "type": "string",
+                    "required": true
+                 },
+                 "key": {
+                    "type": "string",
+                    "required": true
+                  }
+               }
+              },  
+               "apiAiToken": {
+                "type": "string",
+                "required": true
+              },
+              "sms": {
+              "type":"object",
+              "required":true,
+              "properties": {
+                "text": {
+                    "type": "string",
+                    "required": true
+                 },
+                 "fromNumber": {
+                    "type": "integer",
+                    "required": true
+                  }
+              }
+          }
+          }
+          }
+        example: |
+          {"sms":{"text":"Hi. How are you?", 
+                  "fromNumber":123456789
+                 },
+           "apiAiToken":"asdfsdfsdfdsf",
+           "iftttMakerTrigger":{
+                    "eventName":"smsAgentEvent",
+                    "key":"sfsdfsdfdsf"
+                    }      
+          }
+    responses:
+      200:
+       body:
+        application/json:
+         example: |
+          { "answer": "I'm doing good. How are you?" }
